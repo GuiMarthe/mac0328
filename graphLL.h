@@ -3,35 +3,36 @@
 
 #define vertex int
 
-struct graph {
-   int V; 
-   int A; 
-   link *adj; 
+typedef struct node *link;
+struct node
+{
+    vertex w;
+    link next;
 };
+
+static link NEWnode(vertex w, link next)
+{
+    link a = malloc(sizeof(struct node));
+    a->w = w;
+    a->next = next;
+    return a;
+}
 
 typedef struct graph *Graph;
-
-typedef struct node *link;
-
-struct node { 
-   vertex w; 
-   link next; 
+struct graph
+{
+    int V;
+    int A;
+    link *adj;
 };
-
-static link NEWnode( vertex w, link next) { 
-   link a = malloc( sizeof (struct node));
-   a->w = w; 
-   a->next = next;     
-   return a;                         
-}
 
 Graph GRAPHinit(int V)
 {
     vertex v;
     Graph G;
-    G = malloc(sizeof (*G));
+    G = malloc(sizeof(*G));
     G->V = V;
-    G->A = A;
+    G->A = 0;
     G->adj = malloc(V * sizeof(link));
 
     for (v = 0; v < V; v++)
@@ -39,23 +40,63 @@ Graph GRAPHinit(int V)
     return G;
 }
 
-
 void GRAPHinsertArc(Graph G, vertex v, vertex w)
 {
     link p;
 
-    if (v != w) {
+    if (v != w)
+    {
         for (p = G->adj[v]; p != NULL; p = p->next)
-
+        {
+            printf("\np->w: %d", p->w);
+            if (p->w == w)
+                return;
+        }
+        G->adj[v] = NEWnode(w, G->adj[v]);
+        G->A++;
     }
-        
 }
 
+void GRAPHshow(Graph G)
+{
+    printf("\n\n --- Representação --- \n\n");
+    vertex v;
+    link p;
+    for (v = 0; v < G->V; v++)
+    {
+        printf("%2d:", v);
+        for (p = G->adj[v]; p != NULL; p = p->next)
+            if (p->w != 0)
+                printf(" %2d|", p->w);
+        printf("\n");
+    }
+    printf("\n");
+}
 
+int GRAPHvOutDegree(Graph G, vertex v)
+{
+    link p;
+    int od;
+    od = 0;
+    for (p = G->adj[v]; p != NULL; p = p->next)
+        od++;
+    return od;
+}
 
-
-
-
-
-
-
+int GRAPHvInDegree(Graph G, vertex v)
+{
+    link p;
+    int id;
+    vertex u;
+    id = 0;
+    for (u = 0; u < G->V; u++)
+        if (u != v)
+        {
+            for (p = G->adj[u]; p != NULL; p = p->next)
+            {
+                if (p->w == v)
+                    id++;
+            }
+        }
+    return id;
+}
