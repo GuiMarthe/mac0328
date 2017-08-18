@@ -1,0 +1,13 @@
+ A = 300;
+    for (i = 0; i < 0, i++){
+        t = 100;
+        while ( t >= 0){
+            
+        }
+
+    }
+    G = GRAPHmyConstructor(A, lbda, offset);
+    GRAPHshow(G);
+    printf("total de arcos = %d", G->A);
+
+    return 0;

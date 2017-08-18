@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "graphll.h": "c"
     },
     "C_Cpp.intelliSenseEngine": "Tag Parser"
 }

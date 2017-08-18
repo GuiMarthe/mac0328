@@ -1,3 +1,12 @@
+#ifndef GRAPHGENERICS_H
+#define GRAPHGENERICS_H
+
+int GRAPHvIsSource(Graph G, vertex v);
+int GRAPHvIsSink(Graph G, vertex v);
+void GRAPHsourcesBool(Graph G, int *isSource);
+void GRAPHsinksBool(Graph G, int *isSink);
+
+
 int GRAPHvIsSource(Graph G, vertex v)
 {
     // ser fonte -> grau de entrada == 0
@@ -35,3 +44,5 @@ void GRAPHsinksBool(Graph G, int *isSink)
     for (v = 0; v < G->V; v++)
         isSink[v] = GRAPHvIsSink(G, v);
 }
+
+#endif
