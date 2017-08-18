@@ -3,6 +3,8 @@
 
 #define vertex int
 
+static int visit[1000];
+
 typedef struct node *link;
 struct node
 {
@@ -48,7 +50,7 @@ void GRAPHinsertArc(Graph G, vertex v, vertex w)
     {
         for (p = G->adj[v]; p != NULL; p = p->next)
         {
-            printf("\np->w: %d", p->w);
+            //printf("\np->w: %d", p->w);
             if (p->w == w)
                 return;
         }
@@ -99,4 +101,64 @@ int GRAPHvInDegree(Graph G, vertex v)
             }
         }
     return id;
+}
+
+int GRAPHcheckUGraph(Graph G)
+{
+    vertex v, w;
+    link p, q;
+    int w_to_v;
+    w_to_v = 0;
+    for (v = 0; v < G->V; v++)
+        for (p = G->adj[v]; p != NULL; p = p->next)
+        {
+            // como tem v-w, vou checar se tem w-v
+            for (q = G->adj[p->w]; q != NULL; q = q->next)
+            {
+                if (q->w == v)
+                {
+                    w_to_v = 1;
+                    break;
+                }
+            }
+            if (w_to_v == 0)
+                return 0;
+            else
+                continue;
+        }
+    return 1;
+}
+
+static int GRAPHcheckIsParallel(Graph G, vertex v, vertex w)
+{
+    link p;
+    int p_to_w, w_to_p;
+    p_to_w = w_to_p = 0;
+    for (p = G->adj[v]; p != NULL; p = p->next)
+        if (p->w == w)
+            p_to_w = 1;
+    for (p = G->adj[w]; p != NULL; p = p->next)
+        if (p->w == v)
+            w_to_p = 1;
+    if (p_to_w == 1 && w_to_p == 1)
+        return 1;
+    else
+        return 0;
+}
+
+static void reachR( Graph G, vertex v) 
+{ 
+   visit[v] = 1;
+   for (link a = G->adj[v]; a != NULL; a = a->next)
+      if (visit[a->w] == 0)
+         reachR( G, a->w);
+}
+
+int GRAPHreach( Graph G, vertex s, vertex t) 
+{ 
+   for (vertex v = 0; v < G->V; ++v)
+      visit[v] = 0;
+   reachR( G, s);
+   if (visit[t] == 0) return 0;
+   else return 1;
 }

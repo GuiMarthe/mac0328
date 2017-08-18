@@ -91,4 +91,15 @@ int GRAPHvInDegree(Graph G, vertex v)
     return od;
 }
 
-
+int GRAPHcheckUGraph(Graph G)
+{
+    vertex v, w;
+    for (v = 0; v < G->V; v++)
+        for (w = 0; w < G->V; w++)
+        {
+            if (v != w && G->adj[v][w] == 1)
+                if (G->adj[w][v] != 1)
+                    return 0;
+        }
+    return 1;
+}

@@ -5,8 +5,12 @@
     "tasks": [
         {
             "taskName": "build_debug",
-            "command": " gcc -ggdb -I. -o simple.out simple.c && cat examples/pf_site.txt| ./simple.out",
-            "type": "shell"
+            "command": " gcc -ggdb -I. -o main.out main.c -lm",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

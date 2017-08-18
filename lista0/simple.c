@@ -24,4 +24,5 @@ int main()
     }
 
     GRAPHinspect(G);
+    printf("\nO GRAFO é U: %d\n", GRAPHcheckUGraph(G));
 }
