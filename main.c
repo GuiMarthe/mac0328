@@ -80,15 +80,19 @@ double probabilidade_de_encontro_naive(UGraph G)
 int main()
 {
 
-    int V, A, n_of_1;
+    int V, A, n_of_1, k;
     UGraph G;
     double prob;
-
-    for (V = 2; V < 500; V++)
+    for (V = 2; V < 300; V++) // V começa de 2 para condição da função GRAPHreach
     {
         n_of_1 = 0;
-        for (A = 0; A <= (V)*10; A++)
+        k = 1 + (V / 100);
+        for (A = 0; A >= (100) * (k - 1) && A <= (V) * (1000) * k; A += k)
         {
+            if (A > k * 100)
+            {
+                k++;
+            }
             G = UGRAPHrand2(V, A);
             prob = probabilidade_de_encontro(G);
             printf("%d,%d,%.2f\n", V, A, prob);
@@ -99,8 +103,7 @@ int main()
             if (n_of_1 == 40)
                 break;
         }
-
-    } // V começa de 2 para condição da função GRAPHreach
+    }
 
     return 0;
 }
